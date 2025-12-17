@@ -14,18 +14,50 @@ function fadeTextChange(element, newText) {
   }, 100);
 }
 
+// Changes/adds colour and glow to an element
+function selectedPart(partName) {
+  bodyPart.forEach (part => {
+    part.classList.remove('fillGlow');
+  })
+  
+  partName.classList.add('fillGlow');
+}
+
+// Changes colour and glow of clicked body part
+bodyPart.forEach(part => {
+  const partName = part.dataset.partname;
+
+  part.addEventListener ('mousedown', () => {
+    console.log('Clicked ' + partName); // remove later; for debugging
+    fadeTextChange(partNameText, partName+" Measurements!")
+    isSelected = true;
+    selectedBodyPartText = partName+" Measurements!";
+
+    selectedPart(part);
+  })
+})
+
 // Displays the name of hovered body part
+
+let selectedBodyPartText;
+let isSelected = false;
+
 bodyPart.forEach(part => {
   const partName = part.dataset.partname;
 
   part.addEventListener ('mouseenter', () => {
     console.log(partName); // remove later; for debugging
     fadeTextChange(partNameText, partName);
+    part.classList.add("fill");
   })
 
   part.addEventListener ('mouseleave', () => {
-    fadeTextChange(partNameText, "Track your measurements!")
+    if (isSelected == false) {
+      fadeTextChange(partNameText, "Track your measurements!")
+    } else {
+      fadeTextChange(partNameText, selectedBodyPartText)
+    }
+
+    part.classList.remove("fill");
   })
 })
-
-

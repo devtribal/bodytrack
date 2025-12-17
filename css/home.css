@@ -1,139 +1,84 @@
+/* ===== BASE STYLES ===== */
 body {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   height: 100vh;
-
   margin: 0;
-  
-  
+  gap: 30px;
+  padding-right: 40px;
   background-color: rgb(21, 21, 21);
-}
-
-body {
   font-family: 'Inter', system-ui, sans-serif;
 }
 
+/* ===== TYPOGRAPHY ===== */
 h1, h2 {
   font-family: 'Poppins', sans-serif;
 }
 
+/* ===== BODY PARTS - GENERAL ===== */
 .body-part path {
   stroke: pink;
   stroke-width: 0.1px;
-  transition: fill 100ms ease;   
+  transition: all 100ms ease;
 }
 
-#left-bicep path:hover {
-  fill: #1a1a1a ;
-}
-
-#right-bicep path:hover {
-  fill: #1a1a1a ;
-}
-
-#left-thigh path:hover {
-  fill: #1a1a1a ;
-}
-
-#right-thigh path:hover {
-  fill: #1a1a1a ;
-}
-
-#chest path:hover {
-  fill: #1a1a1a ;
-}
-
-#hip path:hover {
-  fill: #1a1a1a ;
-}
-
-#waist path:hover {
-  fill: #1a1a1a ;
-}
-
-#neck path:hover {
-  fill: #1a1a1a ;
-}
-
-#left-forearm path:hover {
-  fill: #1a1a1a ;
-}
-
-#right-forearm path:hover {
-  fill: #1a1a1a ;
-}
-
-#left-calf path:hover {
-  fill: #1a1a1a ;
-}
-
-#right-calf path:hover {
-  fill: #1a1a1a ;
-}
-
-#left-shoulder path:hover {
-  fill: #1a1a1a ;
-}
-
-#right-shoulder path:hover {
-  
-  fill: #1a1a1a ;
-}
-
+/* ===== SVG ELEMENTS ===== */
 #g2 path {
   stroke: pink;
   stroke-width: 0.1px;
 }
 
+/* ===== AVATAR SECTION ===== */
 #avatar {
-  padding-left: 60px;
-  gap: 8px;
-
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   height: 100vh;
+  width: auto;
+  padding-left: 40px;
 }
 
 #avatar svg {
-  height: 80vh;
-  display: block;
-
+  height: 85%;
   width: auto;
   padding: 20px;
   border: 1px groove pink;
-  background-color: rgb(28,28,28);
+  background-color: rgb(28, 28, 28);
   border-radius: 20px;
 }
 
-#avatar h1 {
-  padding: 0;
-  border:0;
-  margin: 0;
-
-  color: rgb(229,229,229);
-}
-
+/* ===== CUSTOMISATION AREA ===== */
 #customisationArea {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
-
-  height: 100vh;
-  width: 100vw;
+  border: 1px groove pink;
+  background-color: rgb(28, 28, 28);
+  border-radius: 20px;
+  height: 85vh;
+  flex: 1;
+  padding: 20px;
 }
 
 #customisationArea h1 {
-  padding: 20px;
-
-  color: rgb(229,229,229);
-
+  color: rgb(229, 229, 229);
   transition: all 100ms ease;
 }
 
+/* ===== UTILITY CLASSES ===== */
 .fading {
   opacity: 0;
 }
+
+.fillGlow {
+  filter: drop-shadow(0 0 10px rgba(255, 192, 203, 0.6));
+  fill: pink !important;
+}
+
+.fill {
+  fill: #1a1a1a;
+}
+/* pink glow effect: filter: drop-shadow(0 0 10px rgba(255, 192, 203, 0.6));*/

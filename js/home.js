@@ -24,23 +24,23 @@ function selectedPart(partName) {
 }
 
 // Changes colour and glow of clicked body part
+let selectedBodyPartText;
+let selectedBodyPart;
+
 bodyPart.forEach(part => {
   const partName = part.dataset.partname;
 
-  part.addEventListener ('mousedown', () => {
+  part.addEventListener ('click', () => {
     console.log('Clicked ' + partName); // remove later; for debugging
     fadeTextChange(partNameText, partName+" Measurements!")
-    isSelected = true;
-    selectedBodyPartText = partName+" Measurements!";
+    selectedBodyPartText = partName;
+    selectedBodyPart = part;
 
     selectedPart(part);
   })
 })
 
 // Displays the name of hovered body part
-
-let selectedBodyPartText;
-let isSelected = false;
 
 bodyPart.forEach(part => {
   const partName = part.dataset.partname;
@@ -52,12 +52,21 @@ bodyPart.forEach(part => {
   })
 
   part.addEventListener ('mouseleave', () => {
-    if (isSelected == false) {
+    if (!selectedBodyPartText) {
       fadeTextChange(partNameText, "Track your measurements!")
     } else {
-      fadeTextChange(partNameText, selectedBodyPartText)
+      fadeTextChange(partNameText, selectedBodyPartText+" Measurements!")
     }
 
     part.classList.remove("fill");
   })
+})
+
+// Add measurements to a body part
+const inputField = document.querySelector("#input");
+const submitButton = document.querySelector("#submit");
+
+submitButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  localStorage.setItem(selectedBodyPart.getAttribute("id"), inputField.value);
 })

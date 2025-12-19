@@ -6,6 +6,9 @@
 	<title>Document</title>
 	<script src="js/home.js" defer></script>
 	<link rel="stylesheet" href="css/home.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins&display=swap" rel="stylesheet">
 </head>
 <body>
 <div id="avatar">
@@ -107,9 +110,15 @@
    	<h1 id="partNameText">Track your measurements!</h1>
    	<div id="addMeasurements">
    	<form action="">
-         <input type="number" id="input">
-      <input type="submit" id="submit" placeholder="">
+         <input type="number" id="input" placeholder="Measurements">
+         <button type="submit" id="submit">Add</button>
       </form>
+   	</div>
+
+   	<div id="listArea">
+         <ul id="listOfMeasurements">
+            
+         </ul>
    	</div>
    	</div>
      </div>

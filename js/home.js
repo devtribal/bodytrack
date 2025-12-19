@@ -37,6 +37,7 @@ bodyPart.forEach(part => {
     selectedBodyPart = part;
 
     selectedPart(part);
+    createList(part);
   })
 })
 
@@ -57,7 +58,7 @@ bodyPart.forEach(part => {
     } else {
       fadeTextChange(partNameText, selectedBodyPartText+" Measurements!")
     }
-
+    
     part.classList.remove("fill");
   })
 })
@@ -68,5 +69,63 @@ const submitButton = document.querySelector("#submit");
 
 submitButton.addEventListener("click", (e) => {
   e.preventDefault();
-  localStorage.setItem(selectedBodyPart.getAttribute("id"), inputField.value);
+  console.log(selectedBodyPart); // remove later; for debugging
+  if (inputField.value == "" || !selectedBodyPart) {
+    console.log('empty measurement value or no part selected!'); // remove later; for debugging
+    return;
+  }
+  
+  let i = 0;
+  while (true) {
+    if (localStorage.getItem(selectedBodyPart.id+i)) {
+      i++;
+    } else {
+      localStorage.setItem(selectedBodyPart.id+i, inputField.value);
+      createList(selectedBodyPart);
+      inputField.value = "";
+      console.log(inputField.value); // remove later; for debugging
+      break;
+    }
+  }
 })
+
+// Create a list entry for added measurements
+
+const list = document.querySelector("#listOfMeasurements");
+function createList(part) {
+  list.innerHTML = "";
+  for (let i = 0; true; i++) {
+    if (localStorage.getItem(part.id + i)) {
+      const li = document.createElement('li');
+      li.textContent = part.id + i + ": " + localStorage.getItem(part.id+i);
+      createDeleteButton(part, i, li);
+      list.appendChild(li);
+    } else {
+      break;
+    }
+  }
+}
+
+// Adds a delete button to delete selected items
+function createDeleteButton (part, i, li) {
+  const button = document.createElement("button");
+  button.textContent = 'Delete';
+  button.addEventListener("click", () => {
+    localStorage.removeItem(part.id+i);
+    
+    while (true) {
+      if (localStorage.getItem(part.id+(i+1))) {
+        let v = localStorage.getItem(part.id+(i+1));
+        localStorage.setItem(part.id+i, v);
+        localStorage.removeItem(part.id+(i+1));
+        i++;
+      } else {
+        break;
+      }
+    }
+    
+    createList(selectedBodyPart);
+  })
+  
+  li.appendChild(button);
+}

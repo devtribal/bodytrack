@@ -90,16 +90,19 @@ submitButton.addEventListener("click", (e) => {
 })
 
 // Create a list entry for added measurements
-
-const list = document.querySelector("#listOfMeasurements");
+const table = document.querySelector("#listOfMeasurements");
 function createList(part) {
-  list.innerHTML = "";
+  table.innerHTML = "";
   for (let i = 0; true; i++) {
     if (localStorage.getItem(part.id + i)) {
-      const li = document.createElement('li');
-      li.textContent = part.id + i + ": " + localStorage.getItem(part.id+i);
-      createDeleteButton(part, i, li);
-      list.appendChild(li);
+      const tr = document.createElement('tr');
+      const td = document.createElement('td');
+      
+      td.textContent = part.dataset.partname + ": " + localStorage.getItem(part.id+i);
+      
+      table.appendChild(tr);
+      tr.appendChild(td);
+      createDeleteButton(part, i, tr);
     } else {
       break;
     }
@@ -109,7 +112,8 @@ function createList(part) {
 // Adds a delete button to delete selected items
 function createDeleteButton (part, i, li) {
   const button = document.createElement("button");
-  button.textContent = 'Delete';
+  button.innerHTML = '<img src="images/remove.svg" alt="remove measurement">';
+  button.classList.add('deleteButton');
   button.addEventListener("click", () => {
     localStorage.removeItem(part.id+i);
     
@@ -126,6 +130,8 @@ function createDeleteButton (part, i, li) {
     
     createList(selectedBodyPart);
   })
-  
-  li.appendChild(button);
+
+  const td = document.createElement('td');
+  td.appendChild(button);
+  li.appendChild(td);
 }

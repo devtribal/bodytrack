@@ -81,7 +81,9 @@ h1, h2 {
   padding-top: 20px;
 
   width: min-content;
+  height: 100%;
 
+  min-height: 0;
 }
 
 /* ===== UTILITY CLASSES ===== */
@@ -162,12 +164,23 @@ button:hover {
 
   width: 100%;
   table-layout: fixed;
+  margin-left: 3px;
 }
 
 #listArea {
-  width: fit-content;
-
   padding-top: 20px;
+
+  overflow-y: scroll;
+  overflow-x: hidden;
+  flex: 1;
+  max-height: 85%;
+  
+  scrollbar-width: none; /* firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+#listArea::-webkit-scrollbar {
+  display: none; /* chrome/safari */
 }
 
 #listOfMeasurements tr {
@@ -191,3 +204,5 @@ img {
   aspect-ratio: 1/1;
   width: 1.5rem;
 }
+
+/* + and - buttons need to be aligned, probable cause of issue is border not overlapping */

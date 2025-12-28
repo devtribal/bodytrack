@@ -70,9 +70,13 @@ const submitButton = document.querySelector("#submit");
 submitButton.addEventListener("click", (e) => {
   e.preventDefault();
   console.log(selectedBodyPart); // remove later; for debugging
-  if (inputField.value == "" || !selectedBodyPart) {
-    console.log('empty measurement value or no part selected!'); // remove later; for debugging
+  if (!selectedBodyPart) {
+    console.log('no part selected!'); // remove later; for debugging
+    warn();
     return;
+  } else if (inputField.value == "") {
+        console.log('empty measurement value'); // remove later; for debugging
+        return;
   }
   
   let i = 0;
@@ -134,4 +138,19 @@ function createDeleteButton (part, i, li) {
   const td = document.createElement('td');
   td.appendChild(button);
   li.appendChild(td);
+}
+
+function warn() {
+  const allBodyParts = document.querySelectorAll('.body-part');
+  allBodyParts.forEach(part => {
+    part.classList.add('fillGlow')
+    partNameText.textContent = "Select a body part";
+    
+    setTimeout(() => {
+      part.classList.remove('fillGlow');
+      partNameText.textContent = "Track your measurements";
+    }, 500);
+  })
+
+
 }

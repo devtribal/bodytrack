@@ -8,12 +8,13 @@ body {
   gap: 30px;
   padding-right: 40px;
   background-color: rgb(21, 21, 21);
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: "Inter", system-ui, sans-serif;
 }
 
 /* ===== TYPOGRAPHY ===== */
-h1, h2 {
-  font-family: 'Poppins', sans-serif;
+h1,
+h2 {
+  font-family: "Poppins", sans-serif;
 }
 
 /* ===== BODY PARTS - GENERAL ===== */
@@ -154,13 +155,13 @@ button {
 }
 
 button:hover {
-  background-color: rgba(38, 38, 38,0.5);
+  background-color: rgba(38, 38, 38, 0.5);
   transform: translateY(-5%);
 }
 
 #listOfMeasurements {
   font-size: 1.5rem;
-  color: rgb(240,240,240);
+  color: rgb(240, 240, 240);
 
   width: 100%;
   table-layout: fixed;
@@ -174,7 +175,7 @@ button:hover {
   overflow-x: hidden;
   flex: 1;
   max-height: 85%;
-  
+
   scrollbar-width: none; /* firefox */
   -ms-overflow-style: none; /* IE/Edge */
 }
@@ -187,6 +188,8 @@ button:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  margin-bottom: 8px;
 }
 
 .deleteButton:hover {
@@ -205,4 +208,18 @@ img {
   width: 1.5rem;
 }
 
+.deleteButtonDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: fit-content;
+  width: fit-content;
+
+  gap: 8px;
+}
+
+p {
+  margin: 0;
+}
 /* + and - buttons need to be aligned, probable cause of issue is border not overlapping */

@@ -41,6 +41,21 @@ bodyPart.forEach((part) => {
   });
 });
 
+// Deselects alls body parts upon clicking esc
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    bodyPart.forEach((part) => {
+      part.classList.remove("fillGlow");
+    })
+
+    selectedBodyPartText = null;
+    selectedBodyPart = null;
+
+    partNameText.textContent = "Track your measurements!";
+    table.textContent = "";
+  }
+});
+
 // Displays the name of hovered body part
 
 bodyPart.forEach((part) => {
@@ -90,8 +105,18 @@ submitButton.addEventListener("click", (e) => {
     } else {
       const month = now.toLocaleString("default", { month: "short" });
       const date = now.getDate();
+
+      // get selected unit
+      let selectedUnit; // checks which unit is selected
+      toggleButtons.forEach((button) => {
+        if (button.classList.contains("unitButtonActive")) {
+          selectedUnit = button.id;
+        }
+      });
+
       const data = {
         value: inputField.value,
+        unit: selectedUnit,
         month: month,
         date: date,
       };
@@ -127,8 +152,9 @@ function createList(part) {
   }
 }
 
-// Adds a delete button to delete selected items
+// Creates the RHS of the list
 function createDeleteButton(part, i, li, value) {
+  // creates the delete button
   const button = document.createElement("button");
   button.innerHTML = '<img src="images/remove.svg" alt="remove measurement">';
   button.classList.add("deleteButton");
@@ -149,9 +175,12 @@ function createDeleteButton(part, i, li, value) {
     createList(selectedBodyPart);
   });
 
-  const div = document.createElement("div");
+  const div = document.createElement("div"); // creates the RHS wrapper
+
+  // creates the element to display the value in the list
   const valueObject = document.createElement("p");
   valueObject.textContent = value;
+  // appends created elements
   div.classList.add("deleteButtonDiv");
   div.append(valueObject, button);
   li.appendChild(div);
@@ -169,4 +198,27 @@ function warn() {
       partNameText.textContent = "Track your measurements";
     }, 500);
   });
+}
+
+// Unit toggle button
+const toggleButtons = document.querySelectorAll(".unitToggleButton");
+
+toggleButtons.forEach((button) => {
+  button.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    toggleButtons.forEach((btn) => {
+      btn.classList.remove("unitButtonActive");
+    });
+
+    button.classList.add("unitButtonActive");
+  });
+});
+
+function convertToInch(value) {
+  return value * (0.39).toFixed(2);
+}
+
+function convertToCm(value) {
+  return value * (2.54).toFixed(2);
 }

@@ -83,8 +83,11 @@ const inputField = document.querySelector("#input");
 const submitButton = document.querySelector("#submit");
 
 // Error Handling
+let selectedUnit;
 submitButton.addEventListener("click", (e) => {
   e.preventDefault();
+
+  // Prevents error if no part selected or measurement value is empty
   console.log(selectedBodyPart); // remove later; for debugging
   if (!selectedBodyPart) {
     console.log("no part selected!"); // remove later; for debugging
@@ -94,6 +97,7 @@ submitButton.addEventListener("click", (e) => {
     console.log("empty measurement value"); // remove later; for debugging
     return;
   }
+
 
   const now = new Date();
 
@@ -107,7 +111,6 @@ submitButton.addEventListener("click", (e) => {
       const date = now.getDate();
 
       // get selected unit
-      let selectedUnit; // checks which unit is selected
       toggleButtons.forEach((button) => {
         if (button.classList.contains("unitButtonActive")) {
           selectedUnit = button.id;
@@ -131,6 +134,11 @@ submitButton.addEventListener("click", (e) => {
   }
 });
 
+// Prevents input of invalid numbers
+inputField.addEventListener('keydown', (e) => {
+  if (["e", "+", "-", "E"].includes(e.key)) e.preventDefault();
+});
+
 // Create a list entry for added measurements
 const table = document.querySelector("#listOfMeasurements");
 function createList(part) {
@@ -145,7 +153,7 @@ function createList(part) {
 
       table.appendChild(tr);
       tr.appendChild(td);
-      createDeleteButton(part, i, tr, partData.value);
+      createDeleteButton(part, i, tr, partData);
     } else {
       break;
     }
@@ -153,7 +161,7 @@ function createList(part) {
 }
 
 // Creates the RHS of the list
-function createDeleteButton(part, i, li, value) {
+function createDeleteButton(part, i, li, partData) {
   // creates the delete button
   const button = document.createElement("button");
   button.innerHTML = '<img src="images/remove.svg" alt="remove measurement">';
@@ -179,7 +187,25 @@ function createDeleteButton(part, i, li, value) {
 
   // creates the element to display the value in the list
   const valueObject = document.createElement("p");
-  valueObject.textContent = value;
+  toggleButtons.forEach((button) => {
+    if (button.classList.contains("unitButtonActive")) {
+      selectedUnit = button.id;
+    }
+  });
+
+  //
+  let value = Number(partData.value);
+  if (selectedUnit != partData.unit) {
+    if (selectedUnit === "inch") {
+      value = convertToInch(value);
+    } else if (selectedUnit === "cm") {
+        value = convertToCm(value);
+    }
+  }
+
+  value = Math.round(value*100)/100;
+  valueObject.textContent = `${value} ${selectedUnit}`
+    
   // appends created elements
   div.classList.add("deleteButtonDiv");
   div.append(valueObject, button);
@@ -212,13 +238,14 @@ toggleButtons.forEach((button) => {
     });
 
     button.classList.add("unitButtonActive");
+    createList(selectedBodyPart);
   });
 });
 
 function convertToInch(value) {
-  return value * (0.39).toFixed(2);
+  return value / 2.54;
 }
 
 function convertToCm(value) {
-  return value * (2.54).toFixed(2);
+  return value * 2.54;
 }

@@ -153,8 +153,8 @@ function createList(part) {
 
       table.appendChild(tr);
       tr.appendChild(td);
-      createDeleteButton(part, i, tr, partData);
       createChart(part);
+      createDeleteButton(part, i, tr, partData);
     } else {
       break;
     }

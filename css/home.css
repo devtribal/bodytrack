@@ -87,6 +87,14 @@ h2 {
   min-height: 0;
 }
 
+#lowerContainer {
+  display: flex;
+  gap: 20px;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+}
+
 /* ===== UTILITY CLASSES ===== */
 .fading {
   opacity: 0;
@@ -260,4 +268,31 @@ p {
 .unitButtonActive {
   background-color: rgb(60, 60, 60) !important;
   color: rgb(240, 240, 240);
+}
+
+#chartArea {
+  display: flex;
+  justify-content: center;
+  
+  flex: 1;
+  min-width: 0;
+  position: relative;
+
+  height: 50%;
+  width: 0px;
+}
+
+canvas {
+}
+
+#noDataText {
+  color: white;
+
+  position: absolute;
+  top: 50%;
+  translate: 0 -100%;
+}
+
+.noDataOverlay {
+  filter: blur(10px);
 }

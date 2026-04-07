@@ -1,9 +1,7 @@
 const partNameText = document.querySelector("#partNameText");
 const bodyPart = document.querySelectorAll(".body-part");
 
-// changes the text with fade animation
-// i wont lie this was made with the help of AI but I did not copy paste
-// i did my best to understand and coded it myself
+// Changes the text with fade animation
 function fadeTextChange(element, newText) {
   element.classList.add("fading");
 
@@ -38,6 +36,7 @@ bodyPart.forEach((part) => {
 
     selectedPart(part);
     createList(part);
+    createChart(part);
   });
 });
 
@@ -57,7 +56,6 @@ document.addEventListener("keydown", (e) => {
 });
 
 // Displays the name of hovered body part
-
 bodyPart.forEach((part) => {
   const partName = part.dataset.partname;
 
@@ -109,6 +107,7 @@ submitButton.addEventListener("click", (e) => {
     } else {
       const month = now.toLocaleString("default", { month: "short" });
       const date = now.getDate();
+      const fullDate = now.toLocaleString("sv-SE", { year: "numeric", month: "numeric", day: "numeric" });
 
       // get selected unit
       toggleButtons.forEach((button) => {
@@ -122,6 +121,7 @@ submitButton.addEventListener("click", (e) => {
         unit: selectedUnit,
         month: month,
         date: date,
+        fullDate: fullDate
       };
 
       localStorage.setItem(selectedBodyPart.id + i, JSON.stringify(data));
@@ -154,6 +154,7 @@ function createList(part) {
       table.appendChild(tr);
       tr.appendChild(td);
       createDeleteButton(part, i, tr, partData);
+      createChart(part);
     } else {
       break;
     }
@@ -199,13 +200,13 @@ function createDeleteButton(part, i, li, partData) {
     if (selectedUnit === "inch") {
       value = convertToInch(value);
     } else if (selectedUnit === "cm") {
-        value = convertToCm(value);
+      value = convertToCm(value);
     }
   }
 
-  value = Math.round(value*100)/100;
+  value = Math.round(value * 100) / 100;
   valueObject.textContent = `${value} ${selectedUnit}`
-    
+
   // appends created elements
   div.classList.add("deleteButtonDiv");
   div.append(valueObject, button);
@@ -249,3 +250,56 @@ function convertToInch(value) {
 function convertToCm(value) {
   return value * 2.54;
 }
+
+// Chart
+const chartArea = document.getElementById('chartArea');
+let progressChart = null;
+let progressData = [];
+function createChart(part) {
+  progressData = [];
+  for (let i = 0; localStorage.getItem(part.id + i) !== null; i++) {
+    const partData = JSON.parse(localStorage.getItem(part.id + i));
+    progressData.push({ x: partData.fullDate, y: partData.value });
+  }
+
+  if (progressData.length === 0) {
+    document.getElementById("noDataText").style.display = "flex";
+    document.getElementById("chart").classList.add("noDataOverlay");
+    console.log('nodata'); // remove later; debug
+  } else {
+    document.getElementById("noDataText").style.display = "none"
+    document.getElementById("chart").classList.remove("noDataOverlay");
+  }
+  
+  if (progressChart) progressChart.destroy();
+  progressChart = new Chart(document.getElementById('chart'), {
+    type: 'line',
+    data: {
+      datasets: [{
+        label: 'Progress',
+        data: progressData,
+        backgroundColor: 'rgba(75, 192, 192, 0.5)', // bar color
+        borderColor: 'rgba(75, 192, 192, 1)', // border color
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          type: 'time',
+          time: {
+            unit: 'day',
+            displayFormats: {
+              day: 'MMM d'
+            }
+          }
+        },
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+};

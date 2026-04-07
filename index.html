@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="js/home.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
     <link rel="stylesheet" href="css/home.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -194,6 +196,7 @@
       <div id="partNameArea">
         <h1 id="partNameText">Track your measurements!</h1>
       </div>
+      <div id="lowerContainer">
       <div id="addMeasurements">
         <form action="" id="addForm">
           <div id="inputToggleArea">
@@ -212,6 +215,13 @@
 
         <div id="listArea">
           <table id="listOfMeasurements"></table>
+        </div>
+      </div>
+        <div id="chartArea">
+          <canvas id="chart" ></canvas>
+            <div id="noDataText" style="display:none">
+              <p>no data yet</p>
+            </div>
         </div>
       </div>
     </div>
